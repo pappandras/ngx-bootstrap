@@ -1,0 +1,23 @@
+<div class="rundown-container">
+  <!-- Async pipe használata az optimalizált listához -->
+  <ng-container *ngIf="optimizedFilteredRdLines$ | async as filteredRdLines">
+    <div class="rundown-row" 
+         *ngFor="let rdline of filteredRdLines; trackBy: trackByRdLine; let rdLineIndex = index" 
+         cdkDrag 
+         cdkDragHandle
+         [cdkDragData]="getDragData(rdline)">
+      
+      <div class="rundown-content">
+        <span class="line-number">{{ rdLineIndex + 1 }}</span>
+        <span class="line-content">{{ rdline.content }}</span>
+      </div>
+      
+    </div>
+  </ng-container>
+
+  <!-- Teljesítmény riport megjelenítése development módban -->
+  <div class="performance-report" *ngIf="!environment.production">
+    <button (click)="showPerformanceReport()">Teljesítmény Riport</button>
+    <pre *ngIf="performanceReport">{{ performanceReport }}</pre>
+  </div>
+</div>
